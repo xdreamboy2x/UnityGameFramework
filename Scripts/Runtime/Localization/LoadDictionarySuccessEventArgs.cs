@@ -25,9 +25,7 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         public LoadDictionarySuccessEventArgs()
         {
-            DictionaryName = null;
             DictionaryAssetName = null;
-            LoadType = LoadType.Text;
             Duration = 0f;
             UserData = null;
         }
@@ -44,27 +42,9 @@ namespace UnityGameFramework.Runtime
         }
 
         /// <summary>
-        /// 获取字典名称。
-        /// </summary>
-        public string DictionaryName
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
         /// 获取字典资源名称。
         /// </summary>
         public string DictionaryAssetName
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// 获取字典加载方式。
-        /// </summary>
-        public LoadType LoadType
         {
             get;
             private set;
@@ -93,16 +73,12 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         /// <param name="e">内部事件。</param>
         /// <returns>创建的加载字典成功事件。</returns>
-        public static LoadDictionarySuccessEventArgs Create(GameFramework.Localization.LoadDictionarySuccessEventArgs e)
+        public static LoadDictionarySuccessEventArgs Create(ReadDataSuccessEventArgs e)
         {
-            LoadDictionaryInfo loadDictionaryInfo = (LoadDictionaryInfo)e.UserData;
             LoadDictionarySuccessEventArgs loadDictionarySuccessEventArgs = ReferencePool.Acquire<LoadDictionarySuccessEventArgs>();
-            loadDictionarySuccessEventArgs.DictionaryName = loadDictionaryInfo.DictionaryName;
-            loadDictionarySuccessEventArgs.DictionaryAssetName = e.DictionaryAssetName;
-            loadDictionarySuccessEventArgs.LoadType = e.LoadType;
+            loadDictionarySuccessEventArgs.DictionaryAssetName = e.DataAssetName;
             loadDictionarySuccessEventArgs.Duration = e.Duration;
-            loadDictionarySuccessEventArgs.UserData = loadDictionaryInfo.UserData;
-            ReferencePool.Release(loadDictionaryInfo);
+            loadDictionarySuccessEventArgs.UserData = e.UserData;
             return loadDictionarySuccessEventArgs;
         }
 
@@ -111,9 +87,7 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         public override void Clear()
         {
-            DictionaryName = null;
             DictionaryAssetName = null;
-            LoadType = LoadType.Text;
             Duration = 0f;
             UserData = null;
         }

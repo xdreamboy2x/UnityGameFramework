@@ -119,7 +119,7 @@ namespace UnityGameFramework.Runtime
             }
             set
             {
-                Time.timeScale = m_GameSpeed = (value >= 0f ? value : 0f);
+                Time.timeScale = m_GameSpeed = value >= 0f ? value : 0f;
             }
         }
 
@@ -227,11 +227,16 @@ namespace UnityGameFramework.Runtime
             GameFrameworkEntry.Update(Time.deltaTime, Time.unscaledDeltaTime);
         }
 
-        private void OnDestroy()
+        private void OnApplicationQuit()
         {
 #if UNITY_5_6_OR_NEWER
             Application.lowMemory -= OnLowMemory;
 #endif
+            StopAllCoroutines();
+        }
+
+        private void OnDestroy()
+        {
             GameFrameworkEntry.Shutdown();
         }
 

@@ -7,7 +7,6 @@
 
 using GameFramework;
 using GameFramework.Event;
-using System;
 
 namespace UnityGameFramework.Runtime
 {
@@ -26,10 +25,7 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         public LoadDataTableSuccessEventArgs()
         {
-            DataRowType = null;
-            DataTableName = null;
             DataTableAssetName = null;
-            LoadType = LoadType.Text;
             Duration = 0f;
             UserData = null;
         }
@@ -46,36 +42,9 @@ namespace UnityGameFramework.Runtime
         }
 
         /// <summary>
-        /// 获取数据表行的类型。
-        /// </summary>
-        public Type DataRowType
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// 获取数据表名称。
-        /// </summary>
-        public string DataTableName
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
         /// 获取数据表资源名称。
         /// </summary>
         public string DataTableAssetName
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// 获取数据表加载方式。
-        /// </summary>
-        public LoadType LoadType
         {
             get;
             private set;
@@ -104,17 +73,12 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         /// <param name="e">内部事件。</param>
         /// <returns>创建的加载数据表成功事件。</returns>
-        public static LoadDataTableSuccessEventArgs Create(GameFramework.DataTable.LoadDataTableSuccessEventArgs e)
+        public static LoadDataTableSuccessEventArgs Create(ReadDataSuccessEventArgs e)
         {
-            LoadDataTableInfo loadDataTableInfo = (LoadDataTableInfo)e.UserData;
             LoadDataTableSuccessEventArgs loadDataTableSuccessEventArgs = ReferencePool.Acquire<LoadDataTableSuccessEventArgs>();
-            loadDataTableSuccessEventArgs.DataRowType = loadDataTableInfo.DataRowType;
-            loadDataTableSuccessEventArgs.DataTableName = loadDataTableInfo.DataTableName;
-            loadDataTableSuccessEventArgs.DataTableAssetName = e.DataTableAssetName;
-            loadDataTableSuccessEventArgs.LoadType = e.LoadType;
+            loadDataTableSuccessEventArgs.DataTableAssetName = e.DataAssetName;
             loadDataTableSuccessEventArgs.Duration = e.Duration;
-            loadDataTableSuccessEventArgs.UserData = loadDataTableInfo.UserData;
-            ReferencePool.Release(loadDataTableInfo);
+            loadDataTableSuccessEventArgs.UserData = e.UserData;
             return loadDataTableSuccessEventArgs;
         }
 
@@ -123,10 +87,7 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         public override void Clear()
         {
-            DataRowType = null;
-            DataTableName = null;
             DataTableAssetName = null;
-            LoadType = LoadType.Text;
             Duration = 0f;
             UserData = null;
         }

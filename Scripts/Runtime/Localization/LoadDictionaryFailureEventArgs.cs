@@ -25,9 +25,7 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         public LoadDictionaryFailureEventArgs()
         {
-            DictionaryName = null;
             DictionaryAssetName = null;
-            LoadType = LoadType.Text;
             ErrorMessage = null;
             UserData = null;
         }
@@ -44,27 +42,9 @@ namespace UnityGameFramework.Runtime
         }
 
         /// <summary>
-        /// 获取字典名称。
-        /// </summary>
-        public string DictionaryName
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
         /// 获取字典资源名称。
         /// </summary>
         public string DictionaryAssetName
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// 获取字典加载方式。
-        /// </summary>
-        public LoadType LoadType
         {
             get;
             private set;
@@ -93,16 +73,12 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         /// <param name="e">内部事件。</param>
         /// <returns>创建的加载字典失败事件。</returns>
-        public static LoadDictionaryFailureEventArgs Create(GameFramework.Localization.LoadDictionaryFailureEventArgs e)
+        public static LoadDictionaryFailureEventArgs Create(ReadDataFailureEventArgs e)
         {
-            LoadDictionaryInfo loadDictionaryInfo = (LoadDictionaryInfo)e.UserData;
             LoadDictionaryFailureEventArgs loadDictionaryFailureEventArgs = ReferencePool.Acquire<LoadDictionaryFailureEventArgs>();
-            loadDictionaryFailureEventArgs.DictionaryName = loadDictionaryInfo.DictionaryName;
-            loadDictionaryFailureEventArgs.DictionaryAssetName = e.DictionaryAssetName;
-            loadDictionaryFailureEventArgs.LoadType = e.LoadType;
+            loadDictionaryFailureEventArgs.DictionaryAssetName = e.DataAssetName;
             loadDictionaryFailureEventArgs.ErrorMessage = e.ErrorMessage;
-            loadDictionaryFailureEventArgs.UserData = loadDictionaryInfo.UserData;
-            ReferencePool.Release(loadDictionaryInfo);
+            loadDictionaryFailureEventArgs.UserData = e.UserData;
             return loadDictionaryFailureEventArgs;
         }
 
@@ -111,9 +87,7 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         public override void Clear()
         {
-            DictionaryName = null;
             DictionaryAssetName = null;
-            LoadType = LoadType.Text;
             ErrorMessage = null;
             UserData = null;
         }
